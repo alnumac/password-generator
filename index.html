@@ -82,7 +82,6 @@
     customElements.define(mac_passwordgen_elname, class extends HTMLElement {
       constructor() {
         super();
-        console.log(this);
       }
       connectedCallback() {
         const shadowRoot = this.attachShadow({mode: 'closed'});
@@ -380,7 +379,7 @@
                 -ms-user-select: none;
               }
             </style>
-            <form class="" id="pwdGeneratorForm" name="formCurrent" method="POST" onsubmit="console.log(this); return false;">
+            <form class="" id="pwdGeneratorForm" name="formCurrent">
               <div class="line">
                 <input type="password" class="text" name="master" id="masterPwd" placeholder=" " required/>
                 <label for="masterPwd">Main Password</label>
@@ -432,7 +431,9 @@
             form.copybtn.setAttribute("disabled", "");
           }
 
-          form.addEventListener("submit", function() {
+          form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
             /*Load the parameters selected in the form*/
             var pwdMaster = form.master.value;
             var siteName = form.site.value.toLowerCase();
@@ -889,7 +890,6 @@
             break;
           }
         }
-        console.log(offset);
         return offset;
       }
       static get observedAttributes() {
